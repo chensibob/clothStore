@@ -1,0 +1,125 @@
+{
+  "服装门店信息管理": [
+    {
+      "id": 1,
+      "name": "会员信息表",
+      "memberInformation": [
+        "name",
+        "id",
+        "tel"  
+      ],
+    },
+    {
+      "id": 2,
+      "name": "销售记录表",
+      "soldNote": [
+        "name",
+        "type",
+        "amount",
+        "preferentialPrice",
+        "cash",
+        "orderTime",
+      ],
+    },
+    {
+      "id": 3,
+      "name": "资金余额表",
+      "fundBalance": [
+        "income",
+        "change",
+        "fundBalance",
+        "date",
+      ],
+    },
+    {
+      "id": 4,
+      "name": "门店现货表",
+      "storeSpot": [
+        "name",
+        "type",
+        "size",
+        "color",
+        "material",
+        "amount",
+        "soldPrice",
+        "birthday",
+        "manufacturer",
+      ],
+    },
+    {
+      "id": 5,
+      "name": "入库记录表",
+      "inStock": [
+        "name",
+        "type",
+        "size",
+        "color",
+        "material",
+        "amount",
+        "price",
+        "birthday",
+        "manufacturer",
+      ],
+    },
+    {
+      "id": 6,
+      "name": "仓库存货表",
+      "stock": [
+        "name",
+        "type",
+        "size",
+        "color",
+        "material",
+        "amount",
+        "price",
+        "birthday",
+        "manufacturer",
+      ],
+    },
+    {
+      "id": 7,
+      "name": "出库记录表",
+      "outStock": [
+        "name",
+        "type",
+        "size",
+        "color",
+        "material",
+        "amount",
+        "price",
+        "birthday",
+        "manufacturer",
+      ],
+    },
+    {
+      "id": 8,
+      "name": "管理员信息表",
+      "adminInformation": [
+        "name",
+        "tel",
+        "account",
+        "password",
+      ],
+    },
+  ],
+
+
+
+
+
+
+  "users": [
+    {
+      "username": "chensi",
+      "password": "abcdefggg",
+      "id": 1
+    },
+    {
+      "username": "hhh",
+      "password": "xxx",
+      "name": "daaaadaa",
+      "number": 12345678,
+      "id": 2
+    },
+  ]
+}
