@@ -24,5 +24,7 @@ export default {
 </script>
 
 <style>
-
+    .ivu-form-inline{
+        margin: 100px auto;
+    }
 </style>

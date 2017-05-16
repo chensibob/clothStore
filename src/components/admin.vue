@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Table :columns="columns" :data="admin"></Table>
+        <Table :columns="columns" :data="admins"></Table>
         <Form ref="formNewAdmin" :model="formNewAdmin" :label-width="80" :rules="ruleNewAdmin" inline>
             <Form-item label="姓名" prop="name">
                 <Input v-model="formNewAdmin.name" placeholder="请输入"></Input>
