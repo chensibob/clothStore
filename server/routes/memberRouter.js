@@ -24,10 +24,10 @@ memberRouter.route('/')
       // res.writeHead(200, {
       //   'Content-Type': 'text/plain'
       // });
-      console.log(member);
-      res.json(member);
       // res.end('Added the member with id: ' + id);
       // console.log(res.body);
+      console.log(member);
+      res.json(member);
     });
   })
   .delete(Verify.verifyOrdinaryUser, Verify.verifyAdmin, function (req, res, next) {

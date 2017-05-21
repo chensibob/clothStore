@@ -2,6 +2,10 @@
     <div>
         <Table :columns="columns" :data="goods"></Table>
         <Form ref="formNewGood" :model="formNewGood" :label-width="80" :rules="ruleNewGood" inline>
+            <Form-item label="商品编号" prop="goodId">
+                <Input v-model="formNewGood.goodId" placeholder="请输入"></Input>
+            </Form-item>
+
             <Form-item label="名称" prop="name">
                 <Input v-model="formNewGood.name" placeholder="请输入"></Input>
             </Form-item>
@@ -22,39 +26,44 @@
                 <Input v-model="formNewGood.material" placeholder="请输入"></Input>
             </Form-item>
 
-            <Form-item label="数量" prop="amount">
-                <Input v-model="formNewGood.amount" placeholder="请输入"></Input>
+            <Form-item label="数量" prop="stockQuantity">
+                <Input v-model="formNewGood.stockQuantity" placeholder="请输入"></Input>
             </Form-item>
 
-            <Form-item label="进价" prop="buyingPrice">
-                <Input v-model="formNewGood.buyingPrice" placeholder="请输入"></Input>
+            <Form-item label="进价" prop="purchasePrice">
+                <Input v-model="formNewGood.purchasePrice" placeholder="请输入"></Input>
             </Form-item>
 
-            <Form-item label="出厂日期" prop="birthday">
-                <Input v-model="formNewGood.birthday" placeholder="请输入"></Input>
+            <Form-item label="出厂日期" prop="manufactureDate">
+                <Input v-model="formNewGood.manufactureDate" placeholder="请输入"></Input>
             </Form-item>
 
             <Form-item label="生产厂家" prop="manufacturer">
                 <Input v-model="formNewGood.manufacturer" placeholder="请输入"></Input>
             </Form-item>
 
+            <Form-item label="进货日期" prop="purchaseDate">
+                <Input v-model="formNewGood.instockDate" placeholder="请输入"></Input>
+            </Form-item>
 
             <Form-item>
                 <Button type="primary" @click="handleSubmit('formNewGood')" >提交</Button>
-                <Button type="ghost" style="margin-left: 8px">取消</Button>
+                <Button type="ghost" @click="clear()" style="margin-left: 8px">取消</Button>
             </Form-item>
         </Form>
     </div>
 </template>
 
 <script>
+    import {HTTP} from '../http-common';
+
     export default {
         data() {
             return {
                 columns:[
                     {
                         title:'编号',
-                        key:"id"
+                        key:"goodId"
                     },
                     {
                         title:'名称',
@@ -78,19 +87,23 @@
                     },
                     {
                         title:'数量',
-                        key:"amount"
+                        key:"stockQuantity"
                     },
                     {
                         title:'进价',
-                        key:"buyingPrice"
+                        key:"purchasePrice"
                     },
                     {
                         title:'出厂日期',
-                        key:"birthday"
+                        key:"manufactureDate"
                     },
                     {
                         title:'生产厂家',
                         key:"manufacturer"
+                    },
+                    {
+                        title:'进货日期',
+                        key:"instockDate"
                     },
                     {
                         title: '操作',
@@ -128,23 +141,37 @@
                         }
                     }
                 ],
-                goods:[
-                    {id:1, name:'乐町', type:'长裙', size:'M', color:'blue', material:'棉', amount:'10', buyingPrice:'60', birthday:'2017-4', manufacturer:'宁波乐町时尚服饰有限公司'},
-                    {id:2, name:'乐町', type:'短裙', size:'S', color:'black', material:'棉', amount:'12', buyingPrice:'50', birthday:'2017-4', manufacturer:'宁波乐町时尚服饰有限公司'},
-                ],
-                formNewGood:{
-                    id:0,
-                    name:'',
-                    type:'',
-                    size:'',
-                    color:'',
-                    material:'',      
-                    amount:'',
-                    buyingPrice:'',
-                    birthday:'',
-                    manufacturer:''
+                goods: [],
+                // formNewGood: {
+                //     goodId: '',
+                //     name: '',
+                //     type: '',
+                //     size: '',
+                //     color: '',
+                //     material: '',
+                //     stockQuantity: '',
+                //     purchasePrice: '',
+                //     manufactureDate: '',
+                //     manufacturer: '',
+                //     instockDate: ''
+                // },
+                formNewGood: {
+                    goodId: '3',
+                    name: '乐町',
+                    type: '长裙',
+                    size: 'M',
+                    color: 'blue',
+                    material: '棉',
+                    stockQuantity: 10,
+                    purchasePrice: 60,
+                    manufactureDate: '2017-04-21',
+                    manufacturer: '宁波乐町时尚服饰有限公司',
+                    instockDate: '2017-05-20'
                 },
                 ruleNewGood: {
+                    goodId: [
+                        { required: true, message: '请填写商品编号', trigger: 'blur' }
+                    ],
                     name: [
                         { required: true, message: '请填写商品名称', trigger: 'blur' }
                     ],
@@ -160,36 +187,63 @@
                     material: [
                         { required: true, message: '请填写商品面料', trigger: 'blur' }
                     ],
-                    amount: [
-                        { required: true, message: '请填写商品数量', trigger: 'blur' }
+                    stockQuantity: [
+                        // { required: true, message: '请填写商品数量', trigger: 'blur' },
+                        // { type: "number", min: 1, message: '数量至少为1', trigger: 'blur' }
                     ],
-                    buyingPrice: [
-                        { required: true, message: '请填写商品进价', trigger: 'blur' }
+                    purchasePrice: [
+                        // { required: true, message: '请填写商品进价', trigger: 'blur' },
+                        // { type: "float", min: 0.01, message: '价格至少为0.01', trigger: 'blur' }
                     ],
-                    birthday: [
+                    manufactureDate: [
                         { required: true, message: '请填写商品出厂日期', trigger: 'blur' }
                     ],
                     manufacturer: [
                         { required: true, message: '请填写商品生产厂家', trigger: 'blur' }
                     ],
-                    
+                    instockDate: [
+                        { required: true, message: '请填写商品进货日期', trigger: 'blur' }
+                    ]
                 }
             }
         },
+        created() {
+            this.getGoods();
+        },
         methods:{
-            delGood(idx){
-                this.goods.splice(idx, 1);
+            getGoods() {
+                HTTP.get(`stockitems`)
+                .then(res => {
+                    // console.log('FETCHED:', res.data);
+                    this.goods = res.data;
+                    console.log('FETCHED:', this.goods);
+                })
+                .catch(e => {
+                    this.errors.push(e)
+                })
             },
             addGood(){
-                var maxId = 0;
-                for(var i=0; i<this.goods.length; i++){
-                    if(maxId<this.goods[i].id){
-                        maxId = this.goods[i].id;
-                    }
-                }
-                this.formNewGood.id = maxId+1;
-                this.goods.push(this.formNewGood);
-                this.formNewGood = {};
+                // console.log('POSTING:', this.formNewGood);
+                HTTP.post(`stockitems`, this.formNewGood)
+                .then(res => {
+                    var good = res.data;
+                    console.log("POSTED:", good);
+                    this.goods.push(good);
+                    this.formNewGood = {};
+                })
+                .catch(e => {
+                    this.errors.push(e)
+                })
+            },
+            delGood(idx){
+                HTTP.delete('stockitems/' + this.goods[idx]._id)
+                .then(res => {
+                    this.goods.splice(idx, 1);
+                    console.log('DELETED:', res);
+                })
+                .catch(e => {
+                    this.errors.push(e);
+                })
             },
             handleSubmit(name) {
                 this.$refs[name].validate((valid) => {
@@ -200,6 +254,9 @@
                         this.$Message.error('表单验证失败!');
                     }
                 })
+            },
+            clear() {
+                this.formNewGood = {};
             }
         }
     }

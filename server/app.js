@@ -24,6 +24,9 @@ var users = require('./routes/users');
 // var promoRouter = require('./routes/promoRouter');
 // var leaderRouter = require('./routes/leaderRouter');
 var memberRouter = require('./routes/memberRouter');
+var stockItemRouter = require('./routes/stockItemRouter');
+var spotItemRouter = require('./routes/spotItemRouter');
+var soldNoteRouter = require('./routes/soldNoteRouter');
 
 var app = express();
 
@@ -68,6 +71,9 @@ app.use('/users', users);
 // app.use('/promotions',promoRouter);
 // app.use('/leadership',leaderRouter);
 app.use('/members',memberRouter);
+app.use('/stockitems',stockItemRouter);
+app.use('/spotitems',spotItemRouter);
+app.use('/soldnotes',soldNoteRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

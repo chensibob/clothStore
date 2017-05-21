@@ -19,3 +19,16 @@ npm run build --report
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+## Full steps
+
+# run mongoDB
+mongod --dbpath=mongod/data/
+
+# run RESTFUL server
+cd server
+npm start
+
+# run Frontend server
+cd ..
+npm run dev

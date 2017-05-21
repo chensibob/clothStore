@@ -87,11 +87,17 @@
                 ],
                 members: [],
                 formNewMember: {
-                    memberId: '99999',
-                    name: 'HHH',
-                    idcard: '330802198002024404',
-                    phone: '12345678900',
+                    memberId: '',
+                    name: '',
+                    idcard: '',
+                    phone: '',
                 },
+                // formNewMember: {
+                //     memberId: '99999',
+                //     name: 'HHH',
+                //     idcard: '330802198002024404',
+                //     phone: '12345678900',
+                // },
                 ruleNewMember: {
                     memberId: [
                         { required: true, message: '请填写会员卡号', trigger: 'bulr'}
@@ -124,7 +130,6 @@
                     this.members = res.data;
                 })
                 .catch(e => {
-                    console.log('LOGFAILED:');
                     this.errors.push(e)
                 })
             },
@@ -143,13 +148,23 @@
                     this.errors.push(e)
                 })
             },
+            delMember(idx) {
+                HTTP.delete('members/' + this.members[idx]._id)
+                .then(res => {
+                    this.members.splice(idx, 1);
+                    console.log('DELETED:', res);
+                })
+                .catch(e => {
+                    this.errors.push(e);
+                })
+            },
             updateMember() {
-                var url = `members/${this.formNewMember._id}`; 
-                console.log(url, this.formNewMember);
+                // var url = `members/${this.formNewMember._id}`; 
+                // console.log(url, this.formNewMember);
                 HTTP.put(`members/${this.formNewMember._id}`, this.formNewMember)
                 .then(res => {
-                    var member = res.data
-                    console.log("UPDATED:", member)
+                    var member = res.data;
+                    console.log("UPDATED:", member);
                     if (!this.editing) {
                         this.members.push(member)
                     }
@@ -164,16 +179,6 @@
                 this.formNewMember = this.members[idx];
                 // console.log('EDITING:', this.formNewMember);
                 this.editing = true;
-            },
-            delMember(idx) {
-                HTTP.delete('members/' + this.members[idx]._id)
-                .then(res => {
-                    this.members.splice(idx, 1);
-                    console.log('DELETED:', res);
-                })
-                .catch(e => {
-                    this.errors.push(e);
-                })
             },
             handleSubmit(name) {
                 this.$refs[name].validate((valid) => {

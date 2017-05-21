@@ -1,5 +1,5 @@
 <template>
-	<Row>
+	<Row id="carousel">
         <Col :xs="{ span: 20, offset: 2 }" :md="{ span: 18, offset: 3 }" :lg="{ span: 16, offset: 4 }" >
         	<Carousel autoplay v-model="index">
 		        <Carousel-item>

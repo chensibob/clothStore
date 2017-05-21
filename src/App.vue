@@ -1,7 +1,7 @@
 <template>
-	<div>
+	<div id="root">
         <HeaderView></HeaderView>
-		<router-view></router-view>
+		<router-view class="router"></router-view>
         <FooterView></FooterView>
 	</div>
 </template>
@@ -36,6 +36,18 @@ export default {
 </script>
 
 <style>
+    #root {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+    /*#root .ivu-table-wrapper{
+        max-width: 1000px;
+        margin: 0 auto;
+    }*/
+    /*.router{
+        max-width: 1200px;
+        margin: 0 auto;
+    }*/
     .ivu-form-inline{
         margin: 100px auto;
     }

@@ -21,12 +21,12 @@ axios.interceptors.request.use(
 // http response 拦截器
 axios.interceptors.response.use(
     response => {
-        console.log("Good", response);
+        // console.log("Good", response);
         return response;
     },
     err => {
         if (err.response) {
-            console.log("Bad", err.response);
+            // console.log("Bad", err.response);
             switch (err.response.status) {
                 case 401:
                     sessionStorage.removeItem('token');

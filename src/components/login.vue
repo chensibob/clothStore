@@ -70,9 +70,13 @@
                 // login: true,
                 authState: '',
                 user: '',
+                // formLogin: {
+                //     username:'miaoji',
+                //     password:'juiojo'
+                // },
                 formLogin: {
-                    username:'miaoji',
-                    password:'juiojo'
+                    username:'',
+                    password:''
                 },
                 formRegister: {
                     username:'',

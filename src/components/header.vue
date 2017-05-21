@@ -7,18 +7,18 @@
             </Menu-item>
 
             <Menu-item name="2">
+                <Icon type="ios-cart"></Icon>
+                <router-link to="/spot">门店现货</router-link>
+            </Menu-item>
+
+            <Menu-item name="3">
                 <Icon type="ios-list"></Icon>
                 <router-link to="/soldNote">销售记录</router-link>
             </Menu-item>
 
-            <Menu-item name="3">
+            <Menu-item name="4">
                 <Icon type="social-yen"></Icon>
                 <router-link to="/fundBalance">资金余额</router-link>
-            </Menu-item>
-
-            <Menu-item name="4">
-                <Icon type="ios-cart"></Icon>
-                <router-link to="/spot">门店现货</router-link>
             </Menu-item>
 
 <!--             <Menu-item name="5">
