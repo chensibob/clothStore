@@ -80,14 +80,31 @@ module.exports = app.listen(port, function (err) {
   }
 })
 
+var appData = require('../mock.json')
+// 引入数据库
+var getBoardList = appData.getBoardList
+var apiRoutes = express.Router()
+// 使用api的方法来创建连接时候的请求
+apiRoutes.post('/getBoardList', function (req, res) {
+  res.json({
+    errno: 0 ,
+    data: getBoardList
+  });
+})
+// 调用api
+app.use('/api', apiRoutes)
 
-/*var jsonServer = require('json-server')
-var apiServer = jsonServer.create()
-var apiRouter = jsonServer.router('db.json')
-var middlewares = jsonServer.defaults()
+// var jsonServer = require('json-server')
+// var apiServer = jsonServer.create()
+// var apiRouter = jsonServer.router('db.json')
+// var middlewares = jsonServer.defaults()
 
-apiServer.use(middlewares)
-apiServer.use('/api', apiRouter)
-apiServer.listen(port + 1, function () {
-  console.log('JSON Server is running')
-})*/
+// apiServer.use(middlewares)
+// apiServer.use('/api', apiRouter)
+// apiServer.listen(port + 1, function (err) {
+//   if (err) {
+//     console.log(err)
+//     return
+//   }
+//   console.log('Listening at http://localhost:' + (port + 1) + '\n')
+// })

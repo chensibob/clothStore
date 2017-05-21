@@ -1,4 +1,4 @@
-# my_test
+# clothStore
 
 > A Vue.js project
 

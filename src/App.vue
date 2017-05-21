@@ -19,7 +19,19 @@ export default {
     components: {
         HeaderView,
         FooterView
-    }
+    },
+    // created() {
+    //     this.checkLogin();
+    // },
+    // methods: {
+    //     checkLogin() {
+    //         if(!sessionStorage.get('token')){
+    //             this.$router.push('/login');
+    //         } else {
+    //             this.$router.push('/')
+    //         }
+    //     }
+    // }
 }
 </script>
 

@@ -58,6 +58,10 @@ const routes = [
     path: '/stock',
     component: Stock
   },
+  {
+    path: '/login',
+    component: Login
+  }
 ]
 
 const router = new VueRouter({
