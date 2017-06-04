@@ -62,6 +62,7 @@
 
 <script>
     import {HTTP} from '../http-common';
+    import bus from '../assets/eventBus';
 
     export default {
         data() {
@@ -93,6 +94,9 @@
                 }
             }
         },
+        created() {
+            
+        },
         methods: {
             login() {
                 console.log('LOGIN:', this.formLogin);
@@ -103,14 +107,18 @@
                     sessionStorage.setItem('username', this.formLogin.username);
                     this.$Message.success('登录成功!');
                     this.user = this.formLogin.username;
-                    if (this.$router.currentRoute.query) {
-                        var redirect = this.$router.currentRoute.query.redirect;
-                        console.log('QUERY?', this.$router.currentRoute.query)
+                    var redirect = this.$router.currentRoute.query &&
+                        this.$router.currentRoute.query.redirect;
+                    console.log('QUERY?', redirect)
+                    if (redirect) {
                         this.$router.push(redirect)
+                    } else {
+                        this.$router.push('/')
                     }
+                    bus.$emit('loginEvent', this.user);
                 })
                 .catch(e => {
-                    this.$Message.error('用户名或密码错误!');
+                    this.$Message.error('登录失败!');
                     this.errors.push(e)
                 })
             },
@@ -120,18 +128,12 @@
                 .then(res => {
                     console.log('REGISTER:', res.data);
                     this.$Message.success('注册成功!');
-                    this.$router.go('/');
+                    this.$router.push('/');
                 })
                 .catch(e => {
                     this.$Message.error('注册失败!');
-                    // this.errors.push(e)
+                    this.errors.push(e)
                 })
-            },
-            logout() {
-                sessionStorage.removeItem('token');
-                sessionStorage.removeItem('username');
-                this.user = null;
-                console.log('Logout!');
             },
             handleSubmit(name) {
                 this.$refs[name].validate((valid) => {
