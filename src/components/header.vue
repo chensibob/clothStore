@@ -39,18 +39,18 @@
             <Menu-item name="admin">
                 <Icon type="person-stalker"></Icon>
                 管理员信息
-            </Menu-item>
-
-            <Menu-item name="login" v-if="!this.login">
-                <Icon type="log-in"></Icon>
-                登录
-            </Menu-item>
-
-            <Menu-item name="logout" v-if="this.login">
-                <Icon type="log-out"></Icon>
-                {{this.user}},退出
-            </Menu-item>   
+            </Menu-item> 
         </Menu>
+
+        <Button type="default" class="log-button" @click="this.login" v-if="!this.loggedIn">
+            <Icon type="log-in"></Icon>
+            登录
+        </Button> 
+
+        <Button type="default" class="log-button" @click="this.logout" v-if="this.loggedIn">
+            <Icon type="log-out"></Icon>
+            {{this.name}},退出
+        </Button>
         <div class="sticky"></div>
     </div>
 </template>
@@ -62,8 +62,8 @@
 	export default {
         data() {
             return {
-                login: this.$parent.login,
-                user: this.$parent.user
+                loggedIn: false,
+                user: ''
             }
         },
         created() {
@@ -77,21 +77,24 @@
         },
         methods: {
             loadStatus() {
-                console.log('LOGSTATUS', this.login, this.user);
+                console.log('LOGSTATUS', this.loggedIn, this.user);
                 var token = sessionStorage.getItem('token');
                 var user = sessionStorage.getItem('username');
                 if (token && user ) {
-                    this.login = true;
+                    this.loggedIn = true;
                     this.user = user;
                 }
-                console.log('LOGSTATUS', this.login, this.user);
+                console.log('LOGSTATUS', this.loggedIn, this.user);
+            },
+            login(){
+                this.$router.push('login');
             },
             logout() {
                 HTTP.get(`user/logout`)
                 .then(res => {
                     sessionStorage.removeItem('token');
                     sessionStorage.removeItem('username');
-                    this.login = false;
+                    this.loggedIn = false;
                     this.user = null;
                     console.log('Logout!');
                     this.$router.push('/');
@@ -110,11 +113,7 @@
                     case 'fundBalance':
                     case 'stock':
                     case 'admin':
-                    case 'login':
                         this.$router.push(name);
-                        break;
-                    case 'logout':
-                        this.logout();
                         break;
                     default:
                 }
@@ -143,5 +142,14 @@
         /*border:1px solid #cccccc;*/
         width:10%;  
         text-align: center;
+    }
+
+    #header .log-button{
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 10%;
+        height: 60px;
+        z-index: 999;
     }
 </style>
