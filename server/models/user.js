@@ -22,7 +22,7 @@ var User = new Schema({
   },
   role: {
     type: String,
-    enum: ['intern', 'memberAdmin', 'spotAdmin', 'cashAdmin', 'stockAdmin', 'admin'],
+    enum: ['intern', 'memberAdmin', 'spotAdmin', 'stockAdmin', 'admin'],
     default: 'intern'
   }
 });

@@ -27,11 +27,11 @@
             </Form-item>
 
             <Form-item label="数量" prop="quantity">
-                <Input v-model="formNewGood.quantity" placeholder="请输入"></Input>
+                <Input v-model.number="formNewGood.quantity" placeholder="请输入"></Input>
             </Form-item>
 
             <Form-item label="售价" prop="sellingPrice">
-                <Input v-model="formNewGood.sellingPrice" placeholder="请输入"></Input>
+                <Input v-model.number="formNewGood.sellingPrice" placeholder="请输入"></Input>
             </Form-item>
 
             <Form-item label="出厂日期" prop="manufactureDate">
@@ -48,6 +48,26 @@
                 <Button type="ghost" style="margin-left: 8px">取消</Button>
             </Form-item>
         </Form>
+        <Modal
+            v-model="sellModal"
+            title="售出商品"
+            @on-ok="billing"
+            ok-text="售出">
+
+            <span>数量:</span>
+            <Input-number :max="10" :min="1" v-model="sellingInfo.num"></Input-number>
+            <span>单价:</span>
+            <Input v-model.number="sellingInfo.good.sellingPrice" disabled style="width:80px"></Input>
+            <span>实售总价:</span>
+            <Input v-model.number="sellingInfo.totalPrice" style="width:80px" @on-change="calChange()"></Input>
+            <br>
+            <br>
+            <span>收银:</span>
+            <Input v-model.number="sellingInfo.cash" style="width:80px" @on-change="calChange()"></Input>
+            <span>找零:</span>
+            <Input  v-model.number="sellingInfo.change" style="width:80px"></Input>
+
+        </Modal>
     </div>
 </template>
 
@@ -186,8 +206,15 @@
                     ],
                     manufacturer: [
                         { required: true, message: '请填写商品生产厂家', trigger: 'blur' }
-                    ],
-                    
+                    ]   
+                },
+                sellModal: false,
+                sellingInfo: {
+                    good: {},
+                    num: 1,
+                    totalPrice: 0,
+                    cash: null,
+                    change: null
                 }
             }
         },
@@ -228,9 +255,21 @@
                     this.errors.push(e)
                 })
             },
-            sellGood(idx, num=1, discount=0) {
+            sellGood(idx) {
                 var good = this.goods[idx];
-                console.log("SELLING", idx, num, good)
+                console.log(idx, good)
+                this.sellingInfo.good = good;
+                this.sellingInfo.num = 1;
+                this.sellingInfo.totalPrice = good.sellingPrice;
+                this.sellingInfo.cash = this.sellingInfo.totalPrice;
+                this.sellingInfo.change = 0;
+                this.sellModal = true;
+            },
+            billing() {
+                // console.log("SELLING", idx, num, good)
+                var good = this.sellingInfo.good;
+                var num = this.sellingInfo.num;
+                var totalPrice = this.sellingInfo.totalPrice
                 if (good.quantity >= num) {
                     good.quantity -= num;
                     HTTP.put(`spotitems/${good._id}`, good)
@@ -242,15 +281,24 @@
                             name: good.name,
                             type: good.type,
                             quantity: num,
-                            discount: discount,
-                            soldPrice: good.sellingPrice - discount,
+                            discount: good.sellingPrice - totalPrice / num,
+                            soldPrice: totalPrice,
                             soldDate: new Date()
                         }
                         this.noteSell(soldNote);
+                        var cashNote = {
+                            cash: this.sellingInfo.cash,
+                            change: this.sellingInfo.change,
+                            income: this.sellingInfo.totalPrice,
+                            date: new Date()
+                        }
+                        this.noteCash(cashNote);
+                        this.$message.success('提交成功!');
                     })
                     .catch(e => {
                         this.errors.push(e)
                     })
+
                 }
             },
             delGood(idx){
@@ -271,6 +319,14 @@
                     // console.log("NOTE POSTED:", note);
                 })
             },
+            noteCash(note) {
+                // console.log('NOTE:', note);
+                HTTP.post(`cashnotes`, note)
+                .then(res => {
+                    var note = res.data;
+                    // console.log("NOTE POSTED:", note);
+                })
+            },
             handleSubmit(name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
@@ -280,6 +336,10 @@
                         this.$Message.error('表单验证失败!');
                     }
                 })
+            },
+            calChange() {
+                this.sellingInfo.change = this.sellingInfo.cash - this.sellingInfo.totalPrice;
+                console.log("CHANGE", this.sellingInfo);
             }
         }
     }

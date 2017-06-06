@@ -15,7 +15,6 @@
                     <Option value="intern">intern</Option>
                     <Option value="memberAdmin">memberAdmin</Option>
                     <Option value="spotAdmin">spotAdmin</Option>
-                    <Option value="cashAdmin">cashAdmin</Option>
                     <Option value="stockAdmin">stockAdmin</Option>
                 </Select>
             </Form-item>

@@ -2,12 +2,12 @@ import VueRouter from 'vue-router'
 
 import Home from './components/home.vue'
 import User from './components/user.vue'
-import FundBalance from './components/fundBalance.vue'
 import Instock from './components/instock.vue'
 import Login from './components/login.vue'
 import Member from './components/member.vue'
 import Outstock from './components/outstock.vue'
 import SoldNote from './components/soldNote.vue'
+import CashNote from './components/cashNote.vue'
 import Spot from './components/spot.vue'  
 import Stock from './components/stock.vue'
 
@@ -27,8 +27,8 @@ const routes = [
     component: User
   },
   {
-    path: '/fundBalance',
-    component: FundBalance
+    path: '/cashNote',
+    component: CashNote
   },
   {
     path: '/instock',

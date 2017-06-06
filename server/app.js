@@ -27,10 +27,11 @@ var memberRouter = require('./routes/memberRouter');
 var stockItemRouter = require('./routes/stockItemRouter');
 var spotItemRouter = require('./routes/spotItemRouter');
 var soldNoteRouter = require('./routes/soldNoteRouter');
+var cashNoteRouter = require('./routes/cashNoteRouter');
 
 var app = express();
 
-app.use(cors())
+app.use(cors())   //使用cors中间件处理跨域访问
 app.options('*', cors())
 
 // Secure traffic only
@@ -67,13 +68,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
-// app.use('/dishes',dishRouter);
-// app.use('/promotions',promoRouter);
-// app.use('/leadership',leaderRouter);
 app.use('/members',memberRouter);
 app.use('/stockitems',stockItemRouter);
 app.use('/spotitems',spotItemRouter);
 app.use('/soldnotes',soldNoteRouter);
+app.use('/cashnotes',cashNoteRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -16,9 +16,9 @@
                 销售记录
             </Menu-item>
 
-            <Menu-item name="fundBalance">
+            <Menu-item name="cashNote">
                 <Icon type="social-yen"></Icon>
-                资金余额
+                收银记录
             </Menu-item>
 
 <!--             <Menu-item name="5">
@@ -107,7 +107,7 @@
                     case 'member':
                     case 'spot':
                     case 'soldNote':
-                    case 'fundBalance':
+                    case 'cashNote':
                     case 'stock':
                     case 'user':
                         this.$router.push(name);

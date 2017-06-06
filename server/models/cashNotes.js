@@ -8,31 +8,19 @@ var Currency = mongoose.Types.Currency;
 // create a schema
 var cashNoteSchema = new Schema({
   // good: goodSchema,
-  goodId: {
-    type: String,
-    required: true
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  type: {
-    type: String,
-    required: true
-  },
-  quantity: {
-    type: Number,
-    required: true
-  },
-  discount: {
+  cash: {
     type: Currency,
     required: true
   },
-  soldPrice: {
+  change: {
     type: Currency,
     required: true
   },
-  soldDate: {
+  income: {
+    type: Currency,
+    required: true
+  },
+  date: {
     type: Date,
     required: true
   }
