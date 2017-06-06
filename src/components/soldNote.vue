@@ -62,7 +62,7 @@
                         key:"quantity"
                     },
                     {
-                        title:'优惠金额',
+                        title:'单件优惠',
                         key:"discount"
                     },
                     {

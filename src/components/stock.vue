@@ -27,11 +27,11 @@
             </Form-item>
 
             <Form-item label="数量" prop="stockQuantity">
-                <Input v-model="formNewGood.stockQuantity" placeholder="请输入"></Input>
+                <Input v-model.number="formNewGood.stockQuantity" placeholder="请输入"></Input>
             </Form-item>
 
             <Form-item label="进价" prop="purchasePrice">
-                <Input v-model="formNewGood.purchasePrice" placeholder="请输入"></Input>
+                <Input v-model.number="formNewGood.purchasePrice" placeholder="请输入"></Input>
             </Form-item>
 
             <Form-item label="出厂日期" prop="manufactureDate">
@@ -142,31 +142,18 @@
                     }
                 ],
                 goods: [],
-                // formNewGood: {
-                //     goodId: '',
-                //     name: '',
-                //     type: '',
-                //     size: '',
-                //     color: '',
-                //     material: '',
-                //     stockQuantity: '',
-                //     purchasePrice: '',
-                //     manufactureDate: '',
-                //     manufacturer: '',
-                //     instockDate: ''
-                // },
                 formNewGood: {
-                    goodId: '3',
-                    name: '乐町',
-                    type: '长裙',
-                    size: 'M',
-                    color: 'blue',
-                    material: '棉',
-                    stockQuantity: 10,
-                    purchasePrice: 60,
-                    manufactureDate: '2017-04-21',
-                    manufacturer: '宁波乐町时尚服饰有限公司',
-                    instockDate: '2017-05-20'
+                    goodId: '',
+                    name: '',
+                    type: '',
+                    size: '',
+                    color: '',
+                    material: '',
+                    stockQuantity: '',
+                    purchasePrice: '',
+                    manufactureDate: '',
+                    manufacturer: '',
+                    instockDate: ''
                 },
                 ruleNewGood: {
                     goodId: [

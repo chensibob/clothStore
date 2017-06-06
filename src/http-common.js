@@ -6,7 +6,7 @@ axios.defaults.timeout = 5000;
 axios.defaults.baseURL = `http://localhost:3000`;
 
 // http request 拦截器
-axios.interceptors.request.use(
+axios.interceptors.request.use(   //发送之前加token到请求报文的headers
     config => {
         var token = sessionStorage.getItem('token');
         if (token) {
@@ -19,8 +19,8 @@ axios.interceptors.request.use(
     });
 
 // http response 拦截器
-axios.interceptors.response.use(
-    response => {
+axios.interceptors.response.use(  //拦截返回报文的错误代码并作出响应
+    response => {  
         // console.log("Good", response);
         return response;
     },
@@ -45,4 +45,4 @@ axios.interceptors.response.use(
         // return Promise.reject(err.response.data)
     })
 
-export const HTTP = axios;
+export const HTTP = axios;    //axios被打包成HTTP对象并export

@@ -1,6 +1,6 @@
 <template>
     <div id="header">
-        <Menu id="nav" mode="horizontal" :theme="light" active-name="1" @on-select="onSelect">
+        <Menu id="nav" mode="horizontal" :theme="light" active-name="member" @on-select="onSelect">
             <Menu-item name="member">
                 <Icon type="ios-people"></Icon>
                 会员信息

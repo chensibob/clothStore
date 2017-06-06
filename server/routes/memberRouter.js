@@ -48,7 +48,7 @@ memberRouter.route('/:memberId')
     });
   })
   .put(Verify.verifyOrdinaryUser, Verify.verifyMemberAdmin, function (req, res, next) {
-    Members.findByIdAndUpdate(req.params.memberId, {
+    Members.findByIdAndUpdate(req.params.memberId, {  //更新指定id的对象
       $set: req.body
     }, {
       new: true

@@ -155,29 +155,17 @@
                     }
                 ],
                 goods:[],
-                // formNewGood:{
-                //     id: '',
-                //     name: '',
-                //     type: '',
-                //     size: '',
-                //     color: '',
-                //     material: '',      
-                //     quantity: '',
-                //     sellingPrice: '',
-                //     manufactureDate: '',
-                //     manufacturer: ''
-                // },
                 formNewGood:{
-                    goodId: 9,
-                    name: '绸袍',
-                    type: '睡衣',
-                    size: 'Z',
-                    color: '白',
-                    material: 'silk',      
-                    quantity: 100,
-                    sellingPrice: 999,
-                    manufactureDate:'2017-3-9',
-                    manufacturer:'春蚕'
+                    id: '',
+                    name: '',
+                    type: '',
+                    size: '',
+                    color: '',
+                    material: '',      
+                    quantity: '',
+                    sellingPrice: '',
+                    manufactureDate: '',
+                    manufacturer: ''
                 },
                 ruleNewGood: {
                     name: [
