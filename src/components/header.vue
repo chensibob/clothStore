@@ -36,20 +36,20 @@
                 出库记录
             </Menu-item> -->
 
-            <Menu-item name="admin">
+            <Menu-item name="user">
                 <Icon type="person-stalker"></Icon>
-                管理员信息
+                用户信息
             </Menu-item> 
         </Menu>
 
-        <Button type="default" class="log-button" @click="this.login" v-if="!this.loggedIn">
+        <Button type="default" class="log-button" @click="login" v-if="!loggedIn">
             <Icon type="log-in"></Icon>
             登录
         </Button> 
 
-        <Button type="default" class="log-button" @click="this.logout" v-if="this.loggedIn">
+        <Button type="default" class="log-button" @click="logout" v-if="loggedIn">
             <Icon type="log-out"></Icon>
-            {{this.name}},退出
+            {{user}},退出
         </Button>
         <div class="sticky"></div>
     </div>
@@ -69,18 +69,15 @@
         created() {
             this.loadStatus();
         },
-        // updated() {
-        //     this.loadStatus();
-        // },
         mounted() {
-            bus.$on('loginEvent', this.loadStatus);
+            bus.$on('loginEvent', this.loadStatus);             //监听登录事件，若事件触发则调用loadStatus方法
         },
         methods: {
             loadStatus() {
                 console.log('LOGSTATUS', this.loggedIn, this.user);
                 var token = sessionStorage.getItem('token');
                 var user = sessionStorage.getItem('username');
-                if (token && user ) {
+                if (token && user) {
                     this.loggedIn = true;
                     this.user = user;
                 }
@@ -112,18 +109,19 @@
                     case 'soldNote':
                     case 'fundBalance':
                     case 'stock':
-                    case 'admin':
+                    case 'user':
                         this.$router.push(name);
                         break;
                     default:
                 }
             }
-        },
-        events: {
-            'login-broadcast': function() {
-                this.loadStatus();
-            }
         }
+        // ,
+        // events: {
+        //     'login-broadcast': function() {
+        //         this.loadStatus();
+        //     }
+        // }
     }
 </script>
 
@@ -135,17 +133,18 @@
         margin-bottom: 20px;
     }
     #nav{
-        position: absolute;
+        position: fixed;
+        top: 0;
         width: 100%;
+        z-index: 998;
     }
     #nav li{
-        /*border:1px solid #cccccc;*/
-        width:10%;  
+        width:12%;
         text-align: center;
     }
 
     #header .log-button{
-        position: absolute;
+        position: fixed;
         top: 0;
         right: 0;
         min-width: 10%;

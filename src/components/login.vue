@@ -31,6 +31,16 @@
                            <Icon type="ios-locked-outline" slot="prepend"></Icon>
                         </Input>
                     </Form-item>
+                    <Form-item prop="name">
+                        <Input type="text" v-model="formRegister.name" placeholder="姓名">
+                           <Icon type="ios-list-outline" slot="prepend"></Icon>
+                        </Input>
+                    </Form-item>
+                    <Form-item prop="phone">
+                        <Input type="text" v-model="formRegister.phone" placeholder="联系方式">
+                           <Icon type="ios-telephone-outline" slot="prepend"></Icon>
+                        </Input>
+                    </Form-item>
 
                     <Form-item>
                         <Button type="primary" @click="handleSubmit('formRegister')" long>注册</Button>
@@ -81,7 +91,9 @@
                 },
                 formRegister: {
                     username:'',
-                    password:''
+                    password:'',
+                    name: '',
+                    phone: ''
                 },
                 ruleAuth: {
                     username: [
@@ -89,7 +101,7 @@
                     ],
                     password: [
                         { required: true, message: '请填写密码', trigger: 'blur' },
-                        { type: 'string', min: 5, message: '密码长度不能小于6位', trigger: 'blur' }
+                        { type: 'string', min: 5, max: 10, message: '密码长度不能小于5位', trigger: 'blur' }
                     ]
                 }
             }
@@ -115,7 +127,7 @@
                     } else {
                         this.$router.push('/')
                     }
-                    bus.$emit('loginEvent', this.user);
+                    bus.$emit('loginEvent', this.user);     //登录成功，触发登录事件
                 })
                 .catch(e => {
                     this.$Message.error('登录失败!');

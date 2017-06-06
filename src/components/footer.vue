@@ -1,7 +1,7 @@
 <template>
-    <footer>
+    <div id="footer">
 		<p>Copyright by chensibob@github.com</p>
-    </footer>
+    </div>
 </template>
 
 <script>
@@ -9,8 +9,9 @@
 </script>
 
 <style>
-    footer{
+    #footer{
         text-align: center;
         height:50px;
+        margin: 10px;
     }
 </style>

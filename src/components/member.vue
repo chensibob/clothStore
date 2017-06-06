@@ -1,5 +1,14 @@
 <template>
-	<div>
+    <div id="member">
+        <Input id="search" v-model="searchParam">
+            <Select v-model="searchItem" slot="prepend" style="width: 80px">
+                <Option value="name">姓名</Option>
+                <Option value="phone">联系方式</Option>
+            </Select>
+            <Button slot="append" icon="ios-search" @click="searchMembers"></Button>
+            <Button slot="append" icon="refresh" @click="refreshMembers"></Button>
+        </Input>
+        
         <Table :columns="columns" :data="members"></Table>
         <Form ref="formNewMember" :model="formNewMember" :label-width="80" :rules="ruleNewMember" inline>
             <Form-item label="会员号" prop="memberId">
@@ -32,6 +41,8 @@
     export default {
         data() {
             return {
+                searchParam: '',
+                searchItem: 'phone',
                 columns:[
                     {
                         title:'会员号',
@@ -106,12 +117,12 @@
                         { required: true, message: '请填写姓名', trigger: 'blur' }
                     ],
                     idcard: [
-                        { required: true, message: '请填写身份证号', trigger: 'blur' },
+                        { required: true, len: 18, message: '请填写18位身份证号', trigger: 'blur' },
                         { type: 'regexp', pattern: /(\d{18})/, message: '身份证号码不正确', trigger: 'blur' }
                         //{ type: 'regexp', pattern: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/, message: '身份证号码不正确', trigger: 'blur' }
                     ],
                     phone:[
-                        { required: true, message: '请填写联系方式', trigger: 'blur' },
+                        { required: true, len: 11, message: '请填写11位手机号', trigger: 'blur' },
                         //{ type: 'regexp', pattern: /(^(\d{3,4}-)?\d{7,8})$|(13[0-9]{9})/, message: '格式不正确', trigger: 'blur' }
                     ]
                 },
@@ -132,6 +143,36 @@
                 .catch(e => {
                     this.errors.push(e)
                 })
+            },
+            searchMembers() {
+                if (this.searchParam == '') {
+                    this.$Message.error('请输入查询内容!');
+                    return;
+                }
+                var params = {};
+                switch (this.searchItem) {
+                    case 'name':
+                        params.name = this.searchParam;
+                        break;
+                    case 'phone':
+                        params.phone = this.searchParam;
+                        break;
+                    default:
+                }
+                console.log("SEARCH", params);
+                HTTP.get(`members`, { params: params })
+                // this.$http.get(`http://localhost:3000/members`)
+                .then(res => {
+                    console.log('FETCHED:', res.data);
+                    this.members = res.data;
+                })
+                .catch(e => {
+                    this.errors.push(e)
+                })
+            },
+            refreshMembers() {
+                this.searchParam = '';
+                this.getMembers();
             },
             addMember() {
                 console.log('POSTING:', this.formNewMember);
@@ -201,3 +242,13 @@
         }
     }
 </script>
+
+<style>
+    #search {
+        /*display: block;*/
+        right: 0px;
+        width: 300px;
+        margin: 10px;
+    }
+
+</style>

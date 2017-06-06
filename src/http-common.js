@@ -26,11 +26,12 @@ axios.interceptors.response.use(
     },
     err => {
         if (err.response) {
-            // console.log("Bad", err.response);
+            console.log("Bad", err.response);
             switch (err.response.status) {
+                case 500:
                 case 401:
-                    sessionStorage.removeItem('token');
                 case 403:
+                    sessionStorage.removeItem('token');
                     console.log("redirect to Login", router.currentRoute);
                     if (router.currentRoute.path != '/login') {
                         // console.log(router.currentRoute.fullPath);

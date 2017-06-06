@@ -17,7 +17,7 @@ spotItemRouter.route('/')
       res.json(spotItem);
     });
   })
-  .post(Verify.verifyOrdinaryUser, function (req, res, next) {
+  .post(Verify.verifyOrdinaryUser, Verify.verifySpotAdmin, function (req, res, next) {
     console.log(req.body);
     SpotItems.create(req.body, function (err, spotItem) {
       if (err) throw err;
@@ -47,7 +47,7 @@ spotItemRouter.route('/:spotItemId')
       res.json(spotItem);
     });
   })
-  .put(Verify.verifyOrdinaryUser, function (req, res, next) {
+  .put(Verify.verifyOrdinaryUser, Verify.verifySpotAdmin, function (req, res, next) {
     SpotItems.findByIdAndUpdate(req.params.spotItemId, {
       $set: req.body
     }, {
@@ -57,7 +57,7 @@ spotItemRouter.route('/:spotItemId')
       res.json(spotItem);
     });
   })
-  .delete(Verify.verifyOrdinaryUser, Verify.verifyAdmin, function (req, res, next) {
+  .delete(Verify.verifyOrdinaryUser, Verify.verifySpotAdmin, function (req, res, next) {
     SpotItems.findByIdAndRemove(req.params.spotItemId, function (err, resp) {
       if (err) throw err;
       res.json(resp);

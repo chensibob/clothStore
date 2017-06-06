@@ -41,7 +41,47 @@ exports.verifyOrdinaryUser = function (req, res, next) {
   }
 };
 
+exports.verifyMemberAdmin = function (req, res, next) {
+  console.log('DOC', req.decoded._doc)
+  if (req.decoded._doc.admin || req.decoded._doc.role == 'memberAdmin') {
+    next();
+  } else {
+    // if user is not admin or memberAdmin
+    // return an error
+    var err = new Error('You are not authorized to perform this operation!');
+    err.status = 403;
+    next(err);
+  }
+};
+
+exports.verifySpotAdmin = function (req, res, next) {
+  console.log('DOC', req.decoded._doc)
+  if (req.decoded._doc.admin || req.decoded._doc.role == 'spotAdmin') {
+    next();
+  } else {
+    // if user is not admin or spotAdmin
+    // return an error
+    var err = new Error('You are not authorized to perform this operation!');
+    err.status = 403;
+    next(err);
+  }
+};
+
+exports.verifyStockAdmin = function (req, res, next) {
+  console.log('DOC', req.decoded._doc)
+  if (req.decoded._doc.admin || req.decoded._doc.role == 'stockAdmin') {
+    next();
+  } else {
+    // if user is not admin or stockAdmin
+    // return an error
+    var err = new Error('You are not authorized to perform this operation!');
+    err.status = 403;
+    next(err);
+  }
+};
+
 exports.verifyAdmin = function (req, res, next) {
+  console.log('DOC', req.decoded._doc)
   if (req.decoded._doc.admin) {
     next();
   } else {

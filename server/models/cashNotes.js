@@ -6,26 +6,34 @@ require('mongoose-currency').loadType(mongoose);
 var Currency = mongoose.Types.Currency;
 
 // create a schema
-var promoSchema = new Schema({
+var cashNoteSchema = new Schema({
+  // good: goodSchema,
+  goodId: {
+    type: String,
+    required: true
+  },
   name: {
     type: String,
     required: true,
-    unique: true
   },
-  image: {
+  type: {
     type: String,
     required: true
   },
-  label: {
-    type: String,
-    default: ''
+  quantity: {
+    type: Number,
+    required: true
   },
-  price: {
+  discount: {
     type: Currency,
     required: true
   },
-  description: {
-    type: String,
+  soldPrice: {
+    type: Currency,
+    required: true
+  },
+  soldDate: {
+    type: Date,
     required: true
   }
 }, {
@@ -34,7 +42,7 @@ var promoSchema = new Schema({
 
 // the schema is useless so far
 // we need to create a model using it
-var Promotions = mongoose.model('Promotion', promoSchema);
+var CashNotes = mongoose.model('CashNote', cashNoteSchema);
 
 // make this available to our Node applications
-module.exports = Promotions;
+module.exports = CashNotes;

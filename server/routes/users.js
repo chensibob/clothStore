@@ -12,18 +12,36 @@ router.get('/', Verify.verifyOrdinaryUser, Verify.verifyAdmin, function (req, re
   });
 });
 
+router.route('/:userId')
+  .put(Verify.verifyOrdinaryUser, Verify.verifyAdmin, function (req, res, next) {
+    User.findByIdAndUpdate(req.params.userId, {
+      $set: req.body
+    }, {
+      new: true
+    }, function (err, user) {
+      if (err) throw err;
+      res.json(user);
+    });
+  })
+  .delete(Verify.verifyOrdinaryUser, Verify.verifyAdmin, function (req, res, next) {
+    User.findByIdAndRemove(req.params.userId, function (err, resp) {
+      if (err) throw err;
+      res.json(resp);
+    });
+  });
+
 router.post('/register', function (req, res) {
-  console.log('registering!')
+  console.log('registering!', req)
   User.register(new User({ username: req.body.username }), req.body.password, function (err, user) {
-    console.log('NEW USER', user)
+    // console.log('NEW USER', user)
     if (err) {
       return res.status(500).json({err: err});
     }
-    if (req.body.firstname) {
-      user.firstname = req.body.firstname;
+    if (req.body.name) {
+      user.name = req.body.name;
     }
-    if (req.body.lastname) {
-      user.lastname = req.body.lastname;
+    if (req.body.phone) {
+      user.phone = req.body.phone;
     }
     user.save(function (err, user) {
       passport.authenticate('local')(req, res, function () {

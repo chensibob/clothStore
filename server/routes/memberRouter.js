@@ -10,13 +10,16 @@ memberRouter.use(bodyParser.json());
 
 memberRouter.route('/')
   .get(Verify.verifyOrdinaryUser, function (req, res, next) {
-    console.log('Member!', req);
-    Members.find({}, function (err, member) {
+    // console.log('Member!', req);
+    var query = req.query || {}
+    console.log('Member!', req.query);
+    Members.find(query, function (err, member) {
+      console.log(member)
       if (err) throw err;
       res.json(member);
     });
   })
-  .post(Verify.verifyOrdinaryUser, Verify.verifyAdmin, function (req, res, next) {
+  .post(Verify.verifyOrdinaryUser, Verify.verifyMemberAdmin, function (req, res, next) {
     Members.create(req.body, function (err, member) {
       if (err) throw err;
       console.log('Member created!');
@@ -44,7 +47,7 @@ memberRouter.route('/:memberId')
       res.json(member);
     });
   })
-  .put(Verify.verifyOrdinaryUser, Verify.verifyAdmin, function (req, res, next) {
+  .put(Verify.verifyOrdinaryUser, Verify.verifyMemberAdmin, function (req, res, next) {
     Members.findByIdAndUpdate(req.params.memberId, {
       $set: req.body
     }, {
@@ -54,7 +57,7 @@ memberRouter.route('/:memberId')
       res.json(member);
     });
   })
-  .delete(Verify.verifyOrdinaryUser, Verify.verifyAdmin, function (req, res, next) {
+  .delete(Verify.verifyOrdinaryUser, Verify.verifyMemberAdmin, function (req, res, next) {
     Members.findByIdAndRemove(req.params.memberId, function (err, resp) {
       if (err) throw err;
       res.json(resp);

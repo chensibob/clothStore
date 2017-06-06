@@ -1,7 +1,7 @@
 import VueRouter from 'vue-router'
 
 import Home from './components/home.vue'
-import Admin from './components/admin.vue'
+import User from './components/user.vue'
 import FundBalance from './components/fundBalance.vue'
 import Instock from './components/instock.vue'
 import Login from './components/login.vue'
@@ -23,8 +23,8 @@ const routes = [
     component: Home
   },
   {
-    path: '/admin',
-    component: Admin
+    path: '/user',
+    component: User
   },
   {
     path: '/fundBalance',

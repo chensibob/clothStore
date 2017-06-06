@@ -16,7 +16,7 @@ soldNoteRouter.route('/')
       res.json(soldNote);
     });
   })
-  .post(Verify.verifyOrdinaryUser, function (req, res, next) {
+  .post(Verify.verifyOrdinaryUser, Verify.verifySpotAdmin, function (req, res, next) {
     console.log(req.body);
     SoldNotes.create(req.body, function (err, soldNote) {
       if (err) throw err;
